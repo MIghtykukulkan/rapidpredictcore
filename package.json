@@ -1,0 +1,24 @@
+{
+  "name": "rapidpredictcore",
+  "version": "1.0.0",
+  "description": "\"# rapidpredictcore\"",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://MIghtykukulkan@github.com/MIghtykukulkan/rapidpredictcore.git"
+  },
+  "author": "umashankar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MIghtykukulkan/rapidpredictcore/issues"
+  },
+  "homepage": "https://github.com/MIghtykukulkan/rapidpredictcore#readme",
+  "dependencies": {
+    "@tensorflow/tfjs-node": "^0.1.17",
+    "lodash": "^4.17.11",
+    "shuffle-seed": "^1.1.6"
+  }
+}
