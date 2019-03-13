@@ -18,6 +18,9 @@
   "homepage": "https://github.com/MIghtykukulkan/rapidpredictcore#readme",
   "dependencies": {
     "@tensorflow/tfjs-node": "^0.1.17",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
     "lodash": "^4.17.11",
     "shuffle-seed": "^1.1.6"
   }
