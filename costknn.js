@@ -7,7 +7,7 @@ var _ = require('lodash');
 const loadCSV = require('./load-csv');
 //-----------------------
 
-class PredictCost {
+class KNN {
 
     typeConvert(data) {
         var mainArray = []
@@ -23,7 +23,7 @@ class PredictCost {
             }
             mainArray.push(tempArray);
 
-        })
+        });
 
         return tf.tensor(mainArray);
     }
@@ -65,7 +65,7 @@ class PredictCost {
             var accuracy = (this.testLabels[index][0] - predictedValue)/this.testLabels[index][0];
             this.accuracyReport.push({"actual":this.testLabels[index][0], "predicted":predictedValue, "accuracy-trend":accuracy});
         });
-        return this.accuracyReport
+        return this.accuracyReport;
     }
 
     computeKnn() {
@@ -115,4 +115,4 @@ class PredictCost {
 
 }
 
-module.exports = PredictCost;
+module.exports = KNN;
