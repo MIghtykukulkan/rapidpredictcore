@@ -28,7 +28,7 @@ app.post('/uploadcsv', upload.any(), function (req, res) {
     const headers = _.first(data);
 
     res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify({'status':'uploadSuccessful', 'path':req.files[0].path, 'headers':headers}));
+    res.end(JSON.stringify({'status':'uploadSuccessful', 'path':req.files[0].path, 'headers':headers, 'data-size':data.length}));
 
    
 });
