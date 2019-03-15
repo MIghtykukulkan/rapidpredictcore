@@ -11,6 +11,7 @@ var upload = multer({ dest: 'uploads/' })
 const KNN = require('./costknn');
 
 app.use(cors());
+app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
 
@@ -36,6 +37,7 @@ app.post('/uploadcsv', upload.any(), function (req, res) {
 app.post('/predict-knn',  function (req, res) {
 
   var body = req.body;
+  console.log(JSON.stringify(body));
   var options = body.options;
   var predictionPoint = body.predictionPoint;
   /* {
@@ -48,7 +50,7 @@ app.post('/predict-knn',  function (req, res) {
     */
 
 
-  let { features, labels, testFeatures, testLabels } = loadCSV(body.path, {
+  let { features, labels, testFeatures, testLabels } = loadCSV('./'+body.path, {
     shuffle: true,
     splitTest: options.testSize,
     dataColumns: options.dataColumns,
