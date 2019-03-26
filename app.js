@@ -9,6 +9,7 @@ const _ = require('lodash');
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 const KNN = require('./costknn');
+const LINEAR = require('./linear-regression');
 
 app.use(cors());
 app.use(bodyParser.urlencoded());
@@ -49,7 +50,9 @@ app.post('/predict-knn',  function (req, res) {
     };
     */
 
-
+    if(options.testSize === undefined){
+      options.testSize = 10;
+    }
   let { features, labels, testFeatures, testLabels } = loadCSV('./'+body.path, {
     shuffle: true,
     splitTest: options.testSize,
@@ -58,10 +61,44 @@ app.post('/predict-knn',  function (req, res) {
   });
 
 
+  console.log(features, labels, testFeatures, testLabels, predictionPoint, options)
   var prediction = new KNN(features, labels, testFeatures, testLabels, predictionPoint, options);
 
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify({'prediction':prediction.computeKnn(), "test_report":prediction.findAccuracy()}));
+
+
+});
+
+
+app.get('/predict-linear',  function (req, res) {
+
+  //var body = req.body;
+  //console.log(JSON.stringify(body));
+  //var options = body.options;
+  var predictionPoint = [130, 1.77, 350];
+  var options = {
+      "kvalue": 10,
+      "strategy":"OCC",
+      "testSize": 50,
+      "dataColumns":['horsepower', 'weight', 'displacement'],
+       "labelColumns": ['mpg']
+    };
+  
+
+
+  let { features, labels, testFeatures, testLabels } = loadCSV('./cars.csv', {
+    shuffle: true,
+    splitTest: options.testSize,
+    dataColumns: options.dataColumns,
+    labelColumns: options.labelColumns
+  });
+
+
+  var prediction = new LINEAR(features, labels, testFeatures, testLabels, predictionPoint, options);
+
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify({'prediction':prediction.predict()}));
 
 
 });
