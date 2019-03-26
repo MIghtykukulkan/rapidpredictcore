@@ -55,7 +55,7 @@ app.post('/predict-knn',  function (req, res) {
     }
   let { features, labels, testFeatures, testLabels } = loadCSV('./'+body.path, {
     shuffle: true,
-    splitTest: options.testSize,
+    splitTest: parseInt(options.testSize),
     dataColumns: options.dataColumns,
     labelColumns: options.labelColumns
   });
