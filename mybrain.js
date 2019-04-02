@@ -1,4 +1,10 @@
-var brain = require('brain.js')
+var brain = require('brain.js');
+const { createCanvas, loadImage } = require('canvas')
+
+
+require('@tensorflow/tfjs-node');
+const tf = require('@tensorflow/tfjs');
+
 
 const config = {
     inputSize: 20,
@@ -10,13 +16,27 @@ const config = {
 };
 
 // create a simple recurrent neural network
-const net = new brain.recurrent.LSTM(config);
+const net = new brain.recurrent.RNN(config);
 
-net.train([{input: [1, 1], output: [1]},
-           {input: [1, 2], output: [2]},
-           {input: [1, 3], output: [3]},
-           {input: [1, 4], output: [4]}]);
+loadImage('./images/image1.jpg').then((myimg)=>{    
+        const canvas = createCanvas(myimg.width, myimg.height);
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(myimg,0,0);
+        const imagedata = ctx.getImageData(0,0,myimg.width, myimg.height);
+        
+        net.train([{input: imagedata, output: [1]}]);
 
-const output = net.run([1, 8]);  // [0]
+});
 
-console.log(output)
+loadImage('./images/image2.jpg').then((myimg)=>{    
+    const canvas = createCanvas(myimg.width, myimg.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(myimg,0,0);
+    const imagedata = ctx.getImageData(0,0,myimg.width, myimg.height);
+    
+    
+    const output = net.run(imagedata); 
+    console.log(output); // [0]
+});
+
+

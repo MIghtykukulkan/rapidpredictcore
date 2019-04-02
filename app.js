@@ -76,28 +76,29 @@ app.get('/predict-linear',  function (req, res) {
   //var body = req.body;
   //console.log(JSON.stringify(body));
   //var options = body.options;
-  var predictionPoint = [130, 1.77, 350];
+  var predictionPoint = [11,11];
   var options = {
       "kvalue": 10,
       "strategy":"OCC",
-      "testSize": 50,
-      "dataColumns":['horsepower', 'weight', 'displacement'],
-       "labelColumns": ['mpg']
+      "testSize": 10,
+      "dataColumns":['first', 'second'],
+       "labelColumns": ['third']
     };
   
 
 
-  let { features, labels, testFeatures, testLabels } = loadCSV('./cars.csv', {
+  let { features, labels, testFeatures, testLabels } = loadCSV('./add.csv', {
     shuffle: true,
     splitTest: options.testSize,
     dataColumns: options.dataColumns,
     labelColumns: options.labelColumns
   });
 
-
   var prediction = new LINEAR(features, labels, testFeatures, testLabels, predictionPoint, options);
 
   res.setHeader('Content-Type', 'application/json');
+  //prediction.train();
+  //console.log(prediction.test());
   res.end(JSON.stringify({'prediction':prediction.predict()}));
 
 
